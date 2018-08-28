@@ -11,7 +11,7 @@ class Cell extends Component {
             isClicked: false,
             guessed: false
         }
-        this.word = "Hello";
+        this.word = this.props.word;
         this.handleClick = this.handleClick.bind(this);
     }
 

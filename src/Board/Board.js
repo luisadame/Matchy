@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cell from '../Cell/Cell';
+import shuffle from 'shuffle-array';
 import './Board.css';
 
 class Board extends Component {
@@ -11,12 +12,18 @@ class Board extends Component {
             cellSelected: null
         }
         this.words = ['Cow', 'Wallet', 'Phone', 'Wheel', 'Wind', 'Blur', 'Seashell', 'Smoke'];
+        this.words = this.words.concat(this.words);
+        shuffle(this.words);
         this.cells = Array(this.state.size).fill()
-            .map((_, idx) => <Cell handleClick={this.handleCellClicks.bind(this)} key={idx} index={idx} />);
+            .map((_, idx) => <Cell handleClick={this.handleCellClicks.bind(this)}
+                key={idx}
+                index={idx}
+                word={this.words[idx]} />);
     }
 
     isPairCorrect(cell) {
-        return cell.word === this.state.cellSelected.word;
+        return cell.state.index !== this.state.cellSelected.state.index &&
+            cell.word === this.state.cellSelected.word;
     }
 
     checkCells(cell) {
