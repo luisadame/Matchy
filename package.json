@@ -2,15 +2,19 @@
   "name": "matchy",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mrluissan.github.com/matchy",
   "dependencies": {
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.5",
     "shuffle-array": "^1.0.1"
   },
+  "devDependencies": {
+    "ncp": "^2.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node ghpages.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
