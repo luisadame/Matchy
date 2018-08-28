@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Cell.css';
 import questionMark from './qMark.svg';
-import Board from '../Board/Board';
+import check from './check.svg';
 
 class Cell extends Component {
     constructor(props) {
@@ -9,7 +9,7 @@ class Cell extends Component {
         this.state = {
             index: this.props.index,
             isClicked: false,
-            isGuessed: false
+            guessed: false
         }
         this.word = "Hello";
         this.handleClick = this.handleClick.bind(this);
@@ -29,13 +29,18 @@ class Cell extends Component {
     }
 
     render() {
+        const guessed = this.state.guessed;
+        let content;
+
+        if (guessed) {
+            content = <img src={check} alt="Check mark" />;
+        } else {
+            content = this.state.isClicked ? this.word : <img src={questionMark} alt="Question mark" />;
+        }
+
         return (
             <div className="cell" onClick={this.handleClick}>
-                {this.state.isClicked ? (
-                    this.word
-                ) : (
-                        <img src={questionMark} alt="Question mark" />
-                    )}
+                {content}
             </div>
         );
     }

@@ -8,20 +8,44 @@ class Board extends Component {
         this.state = {
             rows: this.props.size.split('x')[0],
             size: this.props.size.split('x').reduce((a, b) => a * b),
-            pairSelected: []
+            cellSelected: null
         }
         this.words = ['Cow', 'Wallet', 'Phone', 'Wheel', 'Wind', 'Blur', 'Seashell', 'Smoke'];
+        this.cells = Array(this.state.size).fill()
+            .map((_, idx) => <Cell handleClick={this.handleCellClicks.bind(this)} key={idx} index={idx} />);
+    }
+
+    isPairCorrect(cell) {
+        return cell.word === this.state.cellSelected.word;
+    }
+
+    checkCells(cell) {
+        cell.setState(prevState => ({
+            guessed: true
+        }));
+        this.state.cellSelected.setState(prevState => ({
+            guessed: true
+        }));
     }
 
     handleCellClicks(cell) {
-        console.log(this, cell);
+        console.log(this.state);
+        if (this.state.cellSelected && this.isPairCorrect(cell)) {
+            this.checkCells(cell);
+            this.setState(prevState => ({
+                cellSelected: null
+            }));
+        } else {
+            this.setState(prevState => ({
+                cellSelected: cell
+            }));
+        }
     }
 
     render() {
-        const cells = Array(this.state.size).fill().map((_, idx) => <Cell key={idx} index={idx} handleClick={this.handleCellClicks.bind(this)} />);
         return (
             <div className="board" style={{ '--rows': this.state.rows }}>
-                {cells}
+                {this.cells}
             </div>
         );
     }
